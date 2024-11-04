@@ -2,12 +2,26 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
+interface Coordinates {
+
+}
 
 // TODO: Define a class for the Weather object
+class Weather {
+
+}
 
 // TODO: Complete the WeatherService class
 class WeatherService {
   // TODO: Define the baseURL, API key, and city name properties
+  private baseURL: string;
+  private apiKey: string;
+  private cityName: string;
+
+  constructor() {
+    this.baseURL = 'https://api.openweathermap.org/data/2.5/';
+    this.apiKey = process.env.WEATHER_API_KEY || '';
+    this.cityName = '';
   // TODO: Create fetchLocationData method
   // private async fetchLocationData(query: string) {}
   // TODO: Create destructureLocationData method
