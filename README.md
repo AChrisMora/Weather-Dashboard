@@ -31,8 +31,9 @@ If you'd like to contribute, TOO BAD!
     
 ## Tests
     
-I'll add a video showcasing it soon.
-    
+Heres a funny lil screenshot.
+![Deployed Screenshot.](./Assets/Screenshot.png)
+
 ## Questions
     
 -Github: [AChrisMora](https://github.com/AChrisMora)
