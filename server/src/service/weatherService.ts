@@ -30,16 +30,18 @@ class WeatherService {
 
   // TODO: Create buildWeatherQuery method
   private buildWeatherQuery(city: string): string {
-    return `${this.baseURL}/forecast?q=${city}&appid=${this.API_KEY}`;
+    return `${this.baseURL}/forecast?q=${city}&appid=${this.API_KEY}&units=imperial`;
   }
   private buildCurrentWeather(city:string): string {
-    return `${this.baseURL}/weather?q=${city}&appid=${this.API_KEY}`
+    return `${this.baseURL}/weather?q=${city}&appid=${this.API_KEY}&units=imperial`
   }
   
   
   // TODO: Build parseCurrentWeather method
   private async parseCurrentWeather(city: string): Promise<Weather> {
-    const response = await fetch(this.buildCurrentWeather(city));
+    const url = this.buildCurrentWeather(city)
+    console.log(url)
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Failed to fetch current weather data');
     }
@@ -56,15 +58,20 @@ class WeatherService {
   }
   // TODO: Complete buildForecastArray method
   private buildForecastArray(currentWeather: Weather, weatherData: any[]): Weather[] {
-    return weatherData.map(data => new Weather(
-      currentWeather.city,
-      new Date(data.dt * 1000).toISOString().split('T')[0],
-      data.weather[0].icon,
-      data.weather[0].description,
-      data.main.temp,
-      data.wind.speed,
-      data.main.humidity
-    ));
+    const selectedData = weatherData.filter((_, index) => index === 0 || index % 8 === 7);
+
+  // Map each of the selected data points to a Weather object
+    return selectedData.map(data => 
+      new Weather(
+        currentWeather.city,
+        new Date(data.dt * 1000).toISOString().split('T')[0],
+        data.weather[0].icon,
+        data.weather[0].description,
+        data.main.temp,
+        data.wind.speed,
+        data.main.humidity
+    )
+  );
   }
   // TODO: Create fetchWeatherData method
   private async fetchWeatherData(city: string): Promise<any> {
